@@ -1,0 +1,21 @@
+{
+  "name": "miniproject-final",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "mongodb": "^5.6.0",
+    "morgan": "~1.9.1",
+    "node-cron": "^3.0.2",
+    "nodemon": "^3.0.1",
+    "twilio": "^4.14.1"
+  }
+}

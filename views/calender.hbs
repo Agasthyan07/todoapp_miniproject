@@ -1,0 +1,89 @@
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+        <div class="position-sticky">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse">
+             <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="calender" action="calender">Calender</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Quotes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">about us</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        <H1> REMINDER SYSTEM</H1>
+      
+      <div class="row">
+        <div class="col-md-6 ">
+           <form id="addTaskForm" action="/addreminder" method="post">
+            <div class="form-group">
+              <div class="col m-3">
+              <input type="text" name="task" class="form-control form-control-lg" id="task" placeholder="enter the task to br reminded" required>
+            </div>
+              <input type="datetime-local" name="reminderdate" class="form-control form-control-lg" id="reminderDateTime"  required>
+            
+            
+            <div class="col m-3">
+              <input type="text" name="phonenumber" class="form-control form-control-lg" id="phonenumber" placeholder="enter the phonenumber" required>
+            </div>
+            <button type="submit" class="btn btn-primary homebutton m-3 ml-5">Add Task</button>
+            </div>
+           </form>
+
+        </div>
+      </div>
+      {{#each reminderTasks}}
+
+     <div class="col-sm-6 p-1">
+    <div class="card">
+      <div class="card-body">
+        <h5 id="{{this._id}}" class="card-title"> {{this.reminderTask}} </h5>
+        <p class="card-text">date and time : {{this.reminderDateTime}}</p>
+        <p class="card-text">phone number  : {{phonenumber}}</p>
+        
+        </div>
+    </div>
+  </div>
+   {{/each}}
+      
+     
+       
+        
+        </main>
+    </div>
+</div>
+  
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

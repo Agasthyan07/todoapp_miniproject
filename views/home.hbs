@@ -1,0 +1,245 @@
+<div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+        <div class="position-sticky">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse">
+             <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <ul class="nav flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="calender" action="calender">Calender</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Quotes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">about us</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+        
+
+      
+      <div class="row">
+        <div class="col-md-8">
+        <div class="coloum m-4">
+          <h1>Todo List</h1>
+        <h3>Hai, AKSHAY S V (:</h3><br>
+        <form id="todo-form" action="/addtask" method="post">
+        <div class="form-group row addform">
+          <div class="col"><input type="text" name="task" class="form-control form-control-lg " id="task" placeholder="enter the task"></div>
+          <div class="col"><select name="priority" id="priority" class="form-control">
+            <option>Priority</option>
+            <option>High</option>
+            <option>Medium</option>
+            <option>low</option>
+              </select></div>
+         <div class="col"><button type="submit" class="btn btn-primary homebutton">ADD task</button></div>
+        
+      </div>
+          
+          
+        </form>
+    <div class="coloum m-4">
+    
+     <div class="row scrollable-div">
+    {{#each taskss}}
+
+     <div class="col-sm-6 p-1">
+    <div class="card">
+      <div class="card-body">
+        <h5 id="{{this._id}}" class="card-title"> {{this.task}} </h5>
+        <p class="card-text">priority : {{this.priority}}</p>
+        <div class="row ml-3">
+          <form class="p-2" method="POST" action="/deletetask">
+          <input type="hidden" name="taskId" value="{{this._id}}" />
+          <button class="btn btn-danger" type="submit">Delete Task</button>
+         </form>
+         <button class="btn btn btn-success updatebutton mt-2" onclick="displayUpdateForm('{{this._id}}', '{{this.task}}', '{{this.status}}')">Update Task</button>
+    
+      
+        </div>
+        </div>
+    </div>
+  </div>
+   {{/each}}
+ 
+
+      </div> 
+ <form id="updateTaskForm" class="m-4" style="display: none;">
+    <input type="hidden" id="updateTaskId" name="taskId">
+    <div class="form-group row addform">
+      <div class="col">
+        <input type="text" name="newTask" class="form-control form-control-lg" id="newTask" placeholder="enter the new task">
+      </div>
+      <div class="col">
+        <input type="text" name="newStatus" class="form-control form-control-lg" id="newStatus" placeholder="enter the new status">
+      </div>
+      <div class="col">
+        <button type="submit" class="btn btn-primary homebutton" onclick="updateTask()">Update Task</button>
+      </div>
+    </div>
+  </form>
+       </div>
+        </div>
+        </div>
+        <div class="col-md-4 weather">
+          <div class="container">
+          <div class="row justify-content-center">
+             <div class="parent-div bg-secondary rounded text-center ">
+                <!-- Child div with rounded borders -->
+                 <div class="child-div bg-light rounded p-1">
+                   <!-- Content goes here -->
+                  <h3>Attingal</h3>
+                 <i class="fa-solid fa-sun fa-spin fa-10x mt-5 mb-5 " style="color:  #9526a9"></i>
+                  <p>little cloudy</p>
+
+             <h1 id="weather-heading"> 22.C</h1>
+             <p>The whole day weather in attingal is little cloudy so rain is expected</p>
+        </div>
+      </div>
+      <div class="container mt-5">
+    <div id="quote" class="quote"></div>
+    <div id="author" class="author"></div>
+  </div>
+    </div>
+  </div>
+      
+      
+        </div>
+        
+     </div>
+       
+        
+        </main>
+    </div>
+</div>
+  <script>
+    const quotes = [
+  {
+    quote: "Believe you can and you're halfway there.",
+    author: "Theodore Roosevelt"
+  },
+  {
+    quote: "The only way to do great work is to love what you do.",
+    author: "Steve Jobs"
+  },
+  {
+    quote: "Success is not final, failure is not fatal: It is the courage to continue that counts.",
+    author: "Winston Churchill"
+  },
+  {
+    quote: "The future belongs to those who believe in the beauty of their dreams.",
+    author: "Eleanor Roosevelt"
+  },
+  {
+    quote: "Don't watch the clock; do what it does. Keep going.",
+    author: "Sam Levenson"
+  },
+  {
+    quote: "The harder I work, the luckier I get.",
+    author: "Gary Player"
+  },
+  {
+    quote: "I can't change the direction of the wind, but I can adjust my sails to always reach my destination.",
+    author: "Jimmy Dean"
+  },
+  {
+    quote: "Believe in yourself and all that you are. Know that there is something inside you that is greater than any obstacle.",
+    author: "Christian D. Larson"
+  },
+  {
+    quote: "Success is walking from failure to failure with no loss of enthusiasm.",
+    author: "Winston Churchill"
+  },
+  {
+    quote: "Your time is limited, don't waste it living someone else's life.",
+    author: "Steve Jobs"
+  },
+{
+    quote: "Be the change that you wish to see in the world.",
+    author: "Mahatma Gandhi"
+  }
+];
+
+
+
+const quoteElement = document.getElementById('quote');
+const authorElement = document.getElementById('author');
+
+function generateQuote() {
+  const randomIndex = Math.floor(Math.random() * quotes.length);
+  const randomQuote = quotes[randomIndex];
+
+  quoteElement.textContent = randomQuote.quote;
+  authorElement.textContent = `- ${randomQuote.author}`;
+}
+
+// Initial quote generation
+generateQuote();
+
+// Automatically refresh quote every 10 seconds
+const refreshInterval = 10000; // 10 seconds in milliseconds
+setInterval(generateQuote, refreshInterval);
+
+  </script>
+
+ <script>
+  function displayUpdateForm(taskId, taskName, taskStatus) {
+  document.getElementById('updateTaskId').value = taskId;
+  document.getElementById('newTask').value = taskName;
+  document.getElementById('newStatus').value = taskStatus;
+
+  const updateForm = document.getElementById('updateTaskForm');
+  updateForm.style.display = 'block';
+}
+
+async function updateTask() {
+  const taskId = document.getElementById('updateTaskId').value;
+  const newTask = document.getElementById('newTask').value;
+  const newStatus = document.getElementById('newStatus').value;
+
+  const response = await updateTaskOnServer(taskId, newTask, newStatus);
+  if (response.success) {
+    alert('Task updated successfully!');
+    window.location.reload(); // Reload the page to see updated task list
+  } else {
+    alert('Failed to update task. Please try again later.');
+  }
+}
+
+async function updateTaskOnServer(taskId, newTask, newStatus) {
+  try {
+    const response = await fetch('/updatetask', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        taskId: taskId,
+        newTask: newTask,
+        newStatus: newStatus
+      })
+    });
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error(error);
+    return { success: false };
+  }
+}
+
+ </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+
